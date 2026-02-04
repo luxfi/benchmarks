@@ -1,0 +1,130 @@
+services:
+  geth-node-1:
+    image: ethereum/client-go:latest
+    container_name: geth-node-1
+    ports:
+      - "8545:8545"
+      - "30303:30303"
+    volumes:
+      - geth-data-1:/data
+      - ./genesis.json:/genesis.json:ro
+    command: >
+      --datadir=/data
+      --http
+      --http.addr=0.0.0.0
+      --http.port=8545
+      --http.api=eth,net,web3,txpool
+      --networkid=1337
+      --nodiscover
+      --allow-insecure-unlock
+      --dev
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 4G
+    networks:
+      - geth-net
+
+  geth-node-2:
+    image: ethereum/client-go:latest
+    container_name: geth-node-2
+    volumes:
+      - geth-data-2:/data
+      - ./genesis.json:/genesis.json:ro
+    command: >
+      --datadir=/data
+      --http
+      --http.addr=0.0.0.0
+      --http.api=eth,net,web3,txpool
+      --networkid=1337
+      --bootnodes=enode://...@geth-node-1:30303
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 4G
+    depends_on:
+      - geth-node-1
+    networks:
+      - geth-net
+
+  geth-node-3:
+    image: ethereum/client-go:latest
+    container_name: geth-node-3
+    volumes:
+      - geth-data-3:/data
+      - ./genesis.json:/genesis.json:ro
+    command: >
+      --datadir=/data
+      --http
+      --http.addr=0.0.0.0
+      --http.api=eth,net,web3,txpool
+      --networkid=1337
+      --bootnodes=enode://...@geth-node-1:30303
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 4G
+    depends_on:
+      - geth-node-1
+    networks:
+      - geth-net
+
+  geth-node-4:
+    image: ethereum/client-go:latest
+    container_name: geth-node-4
+    volumes:
+      - geth-data-4:/data
+      - ./genesis.json:/genesis.json:ro
+    command: >
+      --datadir=/data
+      --http
+      --http.addr=0.0.0.0
+      --http.api=eth,net,web3,txpool
+      --networkid=1337
+      --bootnodes=enode://...@geth-node-1:30303
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 4G
+    depends_on:
+      - geth-node-1
+    networks:
+      - geth-net
+
+  geth-node-5:
+    image: ethereum/client-go:latest
+    container_name: geth-node-5
+    volumes:
+      - geth-data-5:/data
+      - ./genesis.json:/genesis.json:ro
+    command: >
+      --datadir=/data
+      --http
+      --http.addr=0.0.0.0
+      --http.api=eth,net,web3,txpool
+      --networkid=1337
+      --bootnodes=enode://...@geth-node-1:30303
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 4G
+    depends_on:
+      - geth-node-1
+    networks:
+      - geth-net
+
+volumes:
+  geth-data-1:
+  geth-data-2:
+  geth-data-3:
+  geth-data-4:
+  geth-data-5:
+
+networks:
+  geth-net:
+    driver: bridge

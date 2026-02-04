@@ -1,0 +1,121 @@
+services:
+  lux-node-1:
+    image: luxfi/luxd:latest
+    container_name: lux-node-1
+    ports:
+      - "9650:9650"
+      - "9651:9651"
+    volumes:
+      - lux-data-1:/data
+    environment:
+      - NETWORK_ID=local
+    command: >
+      --http-host=0.0.0.0
+      --staking-enabled=false
+      --network-id=local
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 4G
+    networks:
+      - lux-net
+
+  lux-node-2:
+    image: luxfi/luxd:latest
+    container_name: lux-node-2
+    volumes:
+      - lux-data-2:/data
+    environment:
+      - NETWORK_ID=local
+    command: >
+      --http-host=0.0.0.0
+      --staking-enabled=false
+      --network-id=local
+      --bootstrap-ips=lux-node-1:9651
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 4G
+    depends_on:
+      - lux-node-1
+    networks:
+      - lux-net
+
+  lux-node-3:
+    image: luxfi/luxd:latest
+    container_name: lux-node-3
+    volumes:
+      - lux-data-3:/data
+    environment:
+      - NETWORK_ID=local
+    command: >
+      --http-host=0.0.0.0
+      --staking-enabled=false
+      --network-id=local
+      --bootstrap-ips=lux-node-1:9651
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 4G
+    depends_on:
+      - lux-node-1
+    networks:
+      - lux-net
+
+  lux-node-4:
+    image: luxfi/luxd:latest
+    container_name: lux-node-4
+    volumes:
+      - lux-data-4:/data
+    environment:
+      - NETWORK_ID=local
+    command: >
+      --http-host=0.0.0.0
+      --staking-enabled=false
+      --network-id=local
+      --bootstrap-ips=lux-node-1:9651
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 4G
+    depends_on:
+      - lux-node-1
+    networks:
+      - lux-net
+
+  lux-node-5:
+    image: luxfi/luxd:latest
+    container_name: lux-node-5
+    volumes:
+      - lux-data-5:/data
+    environment:
+      - NETWORK_ID=local
+    command: >
+      --http-host=0.0.0.0
+      --staking-enabled=false
+      --network-id=local
+      --bootstrap-ips=lux-node-1:9651
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 4G
+    depends_on:
+      - lux-node-1
+    networks:
+      - lux-net
+
+volumes:
+  lux-data-1:
+  lux-data-2:
+  lux-data-3:
+  lux-data-4:
+  lux-data-5:
+
+networks:
+  lux-net:
+    driver: bridge

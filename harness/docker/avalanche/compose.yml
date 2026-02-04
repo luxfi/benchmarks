@@ -1,0 +1,111 @@
+services:
+  avalanche-node-1:
+    image: avaplatform/avalanchego:latest
+    container_name: avalanche-node-1
+    ports:
+      - "9660:9650"
+      - "9661:9651"
+    volumes:
+      - avax-data-1:/data
+    command: >
+      --http-host=0.0.0.0
+      --staking-enabled=false
+      --network-id=local
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 4G
+    networks:
+      - avax-net
+
+  avalanche-node-2:
+    image: avaplatform/avalanchego:latest
+    container_name: avalanche-node-2
+    volumes:
+      - avax-data-2:/data
+    command: >
+      --http-host=0.0.0.0
+      --staking-enabled=false
+      --network-id=local
+      --bootstrap-ips=avalanche-node-1:9651
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 4G
+    depends_on:
+      - avalanche-node-1
+    networks:
+      - avax-net
+
+  avalanche-node-3:
+    image: avaplatform/avalanchego:latest
+    container_name: avalanche-node-3
+    volumes:
+      - avax-data-3:/data
+    command: >
+      --http-host=0.0.0.0
+      --staking-enabled=false
+      --network-id=local
+      --bootstrap-ips=avalanche-node-1:9651
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 4G
+    depends_on:
+      - avalanche-node-1
+    networks:
+      - avax-net
+
+  avalanche-node-4:
+    image: avaplatform/avalanchego:latest
+    container_name: avalanche-node-4
+    volumes:
+      - avax-data-4:/data
+    command: >
+      --http-host=0.0.0.0
+      --staking-enabled=false
+      --network-id=local
+      --bootstrap-ips=avalanche-node-1:9651
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 4G
+    depends_on:
+      - avalanche-node-1
+    networks:
+      - avax-net
+
+  avalanche-node-5:
+    image: avaplatform/avalanchego:latest
+    container_name: avalanche-node-5
+    volumes:
+      - avax-data-5:/data
+    command: >
+      --http-host=0.0.0.0
+      --staking-enabled=false
+      --network-id=local
+      --bootstrap-ips=avalanche-node-1:9651
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 4G
+    depends_on:
+      - avalanche-node-1
+    networks:
+      - avax-net
+
+volumes:
+  avax-data-1:
+  avax-data-2:
+  avax-data-3:
+  avax-data-4:
+  avax-data-5:
+
+networks:
+  avax-net:
+    driver: bridge
