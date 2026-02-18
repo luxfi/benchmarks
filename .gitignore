@@ -28,3 +28,4 @@ venv/
 
 # Docker
 *.log
+CLAUDE.md
