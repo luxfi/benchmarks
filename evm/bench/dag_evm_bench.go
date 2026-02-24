@@ -34,6 +34,9 @@ const (
 	ModeBlockSTM   = "block-stm"   // Block-STM CPU: N txs per block, speculative parallel
 	ModeDAGCPU     = "dag-cpu"     // DAG EVM CPU: N txs -> K vertices (antichain), parallel finality
 	ModeDAGGPU     = "dag-gpu"     // DAG EVM GPU: same as DAG CPU + GPU ecrecover/keccak/bitmap
+	ModeCEVMSeq    = "cevm-seq"    // luxcpp/evm via Go bindings: CPU sequential
+	ModeCEVMPar    = "cevm-par"    // luxcpp/evm via Go bindings: CPU Block-STM parallel
+	ModeCEVMGPU    = "cevm-gpu"    // luxcpp/evm via Go bindings: GPU (Metal/CUDA, auto-detect)
 )
 
 // DAG EVM Workload Types
@@ -542,6 +545,12 @@ func RunDAGBench(mode, workload string, cfg *DAGBenchConfig) (*DAGResult, error)
 		return runDAGCPU(txs, vertices, workload, conflictRate, concurrency, cfg)
 	case ModeDAGGPU:
 		return runDAGGPU(txs, vertices, workload, conflictRate, concurrency, cfg)
+	case ModeCEVMSeq:
+		return runCEVMSeq(txs, vertices, workload, conflictRate, concurrency, cfg)
+	case ModeCEVMPar:
+		return runCEVMPar(txs, vertices, workload, conflictRate, concurrency, cfg)
+	case ModeCEVMGPU:
+		return runCEVMGPU(txs, vertices, workload, conflictRate, concurrency, cfg)
 	default:
 		return nil, fmt.Errorf("unknown mode: %s", mode)
 	}

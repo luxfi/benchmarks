@@ -77,6 +77,7 @@ require (
 	github.com/luxfi/api v1.0.4 // indirect
 	github.com/luxfi/atomic v1.0.0 // indirect
 	github.com/luxfi/cache v1.2.1 // indirect
+	github.com/luxfi/cevm v0.0.0
 	github.com/luxfi/codec v1.1.4 // indirect
 	github.com/luxfi/compress v0.0.5 // indirect
 	github.com/luxfi/concurrent v0.0.3 // indirect
@@ -167,3 +168,5 @@ require (
 )
 
 replace github.com/olekukonko/tablewriter => github.com/olekukonko/tablewriter v0.0.5
+
+replace github.com/luxfi/cevm => ../cevm
