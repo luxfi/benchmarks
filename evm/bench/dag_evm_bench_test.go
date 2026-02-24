@@ -251,3 +251,33 @@ func TestGetHostInfo(t *testing.T) {
 	}
 	t.Logf("Host: %s/%s, %d CPUs, GPU=%v (%s)", h.OS, h.Arch, h.CPUs, h.GPUAvail, h.GPUName)
 }
+
+func TestRunDAGBenchCEVMSeq(t *testing.T) {
+	cfg := &DAGBenchConfig{Seed: 42, NumTxs: 100, Runs: 1, Workload: WorkloadERC20}
+	r, err := RunDAGBench(ModeCEVMSeq, WorkloadERC20, cfg)
+	if err != nil {
+		t.Skipf("cevm-seq unavailable: %v", err)
+	}
+	t.Logf("CEVM-Seq: %d txs, TPS=%.0f, Mgas/s=%.2f, evm=%.1fms",
+		r.TxCount, r.TPS, r.MgasPerS, r.EVMExecMs)
+}
+
+func TestRunDAGBenchCEVMPar(t *testing.T) {
+	cfg := &DAGBenchConfig{Seed: 42, NumTxs: 100, Runs: 1, Workload: WorkloadERC20}
+	r, err := RunDAGBench(ModeCEVMPar, WorkloadERC20, cfg)
+	if err != nil {
+		t.Skipf("cevm-par unavailable: %v", err)
+	}
+	t.Logf("CEVM-Par: %d txs, TPS=%.0f, Mgas/s=%.2f, evm=%.1fms",
+		r.TxCount, r.TPS, r.MgasPerS, r.EVMExecMs)
+}
+
+func TestRunDAGBenchCEVMGPU(t *testing.T) {
+	cfg := &DAGBenchConfig{Seed: 42, NumTxs: 100, Runs: 1, Workload: WorkloadERC20}
+	r, err := RunDAGBench(ModeCEVMGPU, WorkloadERC20, cfg)
+	if err != nil {
+		t.Skipf("cevm-gpu unavailable: %v", err)
+	}
+	t.Logf("CEVM-GPU: %d txs, TPS=%.0f, Mgas/s=%.2f, evm=%.1fms",
+		r.TxCount, r.TPS, r.MgasPerS, r.EVMExecMs)
+}
