@@ -33,6 +33,8 @@ func main() {
 		runMemory(args)
 	case "query":
 		runQuery(args)
+	case "dag":
+		runDAG(args)
 	case "all":
 		runAll(args)
 	case "help", "-h", "--help":
@@ -54,6 +56,7 @@ Commands:
   latency   Measure transaction confirmation latency
   memory    Measure node memory usage under load
   query     Measure RPC query performance
+  dag       DAG EVM + Z-Chain benchmark suite
   all       Run all benchmarks
 
 Options:

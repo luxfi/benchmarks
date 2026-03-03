@@ -47,6 +47,9 @@ bench-memory: build
 bench-query: build
 	./bin/bench query --duration=$(DURATION)
 
+bench-dag: build
+	./bin/bench dag --txs=1000 --proofs=100 --runs=3 --seed=42
+
 # Full benchmark suite
 bench-all: build
 	@echo "=== Lux Blockchain Benchmarks ==="
