@@ -1,6 +1,6 @@
 module github.com/luxfi/benchmarks
 
-go 1.25.5
+go 1.26
 
 require (
 	github.com/luxfi/coreth v1.9.7
